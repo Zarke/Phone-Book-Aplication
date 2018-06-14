@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Phone Book Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  
+</head>
+<body>
+    <table id="phoneBook">
+        <thead>
+            <tr>
+                <td>First name</td>
+                <td>Last name</td>
+                <td>Telephone number</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="bind-FirstName"></td>
+                <td class="bind-LastName"></td>
+                <td class=""></td>
+            </tr>
+        </tbody>
+    </table>
+    <form>
+        User ID: <input type= "text" id="userID"> 
+        <button id="delete">Eve me</button>
+    </form>
+    <hr>
+    <form id="userInput">
+            First name <input type= "text" id="FirstName">
+            Last name <input type= "text" id="LastName">
+            Phone number <input type= "text" id="PhoneNum" maxlength="15"> 
+            <button id="insert">Eve me</button>
+        </form>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
