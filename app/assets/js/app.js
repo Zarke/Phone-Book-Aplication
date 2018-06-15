@@ -1,13 +1,14 @@
-document.getElementById("delete").addEventListener("click", (event)=>{
-    event.preventDefault();
-    let ID = document.getElementById("userID").value;
-    let xhttp = new XMLHttpRequest();
-    if (this.readyState ==4 && this.status ==200) {
-        console.log("Poslao sam zahtev");
-    }
-    xhttp.open("DELETE", "http://127.0.0.1:8081/user/"+ ID, true);
-    xhttp.send();
-});
+// document.getElementById("btnDelete").addEventListener("click", (event)=>{
+//     console.log('eve me');
+//     // event.preventDefault();
+//     // let ID = document.getElementById("userID").value;
+//     // let xhttp = new XMLHttpRequest();
+//     // if (this.readyState ==4 && this.status ==200) {
+//     //     console.log("Poslao sam zahtev");
+//     // }
+//     // xhttp.open("DELETE", "http://127.0.0.1:8081/user/"+ ID, true);
+//     // xhttp.send();
+// });
 
 document.getElementById("insert").addEventListener("click", (event)=>{
     event.preventDefault();
@@ -31,12 +32,11 @@ document.getElementById("insert").addEventListener("click", (event)=>{
         response => response.json()
     ).then(function(data){
         $(".entry").view(data)
-        localStorage.setItem("entries",JSON.stringify(data));
     });  
 }
 
 function searchTable() {
-    var input, filter, table, tr, td, i;
+    let input, filter, table, tr, td, i;
     input = document.getElementById("lastNameSearch");
     filter = input.value.toUpperCase();
     table = document.getElementById("entriesTable");
@@ -44,7 +44,7 @@ function searchTable() {
   
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
+      td = tr[i].getElementsByTagName("td")[2];
       if (td) {
         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
@@ -53,6 +53,14 @@ function searchTable() {
         }
       } 
     }
+  }
+
+  function deleteEntry(entryID){
+    let entry = entryID.value;
+    let url = "http://127.0.0.1:8081/user/" + entry;
+    fetch(url,{
+        method: 'delete'
+    })
   }
 
 getUsers();
