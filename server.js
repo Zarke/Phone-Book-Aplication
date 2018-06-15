@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
  })
 
 // This responds a POST request for returning al users
-app.get('/user', (req, res) => {
+app.get('/users', (req, res) => {
    dbConnect.query("SELECT * FROM entries", function (err, result, fields) {
     if (err) throw err;
     res.json(result);

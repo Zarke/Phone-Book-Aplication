@@ -4,41 +4,57 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Phone Book Application</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script src="./assets/js/jquery.view-engine.js"></script>
+    
 </head>
 <body>
-    <table id="phoneBook">
-        <thead>
-            <tr>
-                <td>First name</td>
-                <td>Last name</td>
-                <td>Telephone number</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="bind-FirstName"></td>
-                <td class="bind-LastName"></td>
-                <td class=""></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container resultList">
+        <div class="table-responsive">
+            <label for="lastname">Search</label>
+            <input type="search" id="lastNameSearch" name="lastname" onkeyup="searchTable()" placeholder="Search by Last Name">
+            <table id="entriesTable" class="table table-dark table-striped table-hover">
+            <caption>User Info</caption>
+                <thead class="thead-dark">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Telephone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="entry">
+                        <td class="bind-FirstName"></td>
+                        <td class="bind-LastName"></td>
+                        <td class="bind-TelephoneNumber"></td>
+                        <td><button class="btn btn-small btn-outline-danger"><i class="fas fa-trash-alt"></i>
+                        </button></td>
+                    </tr>
+                </tbody>   
+            </table>
+        </div>
     <form>
         User ID: <input type= "text" id="userID"> 
         <button id="delete">Eve me</button>
     </form>
     <hr>
+    <div class="form-group">
     <form id="userInput">
-            First name <input type= "text" id="FirstName">
-            Last name <input type= "text" id="LastName">
-            Phone number <input type= "text" id="PhoneNum" maxlength="15"> 
+            <label for="firstName">First Name:</label>
+            <input type= "text" name="firstName" id="FirstName" class="form-control">
+            <label for="lastName">Last Name:</label>
+            <input type= "text" name="lastName" id="LastName" class="form-control">
+            <label for="phoneNumName">Phone Number:</label>
+            <input type= "text" name="phoneNum" id="PhoneNum" maxlength="15" class="form-control"> 
             <button id="insert">Eve me</button>
         </form>
+    </div>    
     <script src="assets/js/app.js"></script>
 </body>
 </html>
