@@ -1,37 +1,35 @@
-// document.getElementById("btnDelete").addEventListener("click", (event)=>{
-//     console.log('eve me');
-//     // event.preventDefault();
-//     // let ID = document.getElementById("userID").value;
-//     // let xhttp = new XMLHttpRequest();
-//     // if (this.readyState ==4 && this.status ==200) {
-//     //     console.log("Poslao sam zahtev");
-//     // }
-//     // xhttp.open("DELETE", "http://127.0.0.1:8081/user/"+ ID, true);
-//     // xhttp.send();
-// });
+function insertUser(){
+  let firstName = document.getElementById('FirstName').value;
+  let lastName = document.getElementById('LastName').value;
+  let phoneNum = document.getElementById('PhoneNum').value;
+  let newUser = {FirstName:firstName,LastName:lastName,TelephoneNumber:phoneNum};
+  newUser = JSON.stringify(newUser);
+  const url = "http://127.0.0.1:8081/user";
+  (async () => {
+    const rawResponse = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: newUser
+    });
+    const content = await rawResponse.json();
+  
+    console.log(content);
+  })();
+}
 
-document.getElementById("insert").addEventListener("click", (event)=>{
-    event.preventDefault();
-    let firstName = document.getElementById('FirstName').value;
-    let lastName = document.getElementById('LastName').value;
-    let phoneNum = document.getElementById('PhoneNum').value;
-    let newUser = {FirstName:firstName,LastName:lastName,TelephoneNumber:phoneNum};
-    newUser = JSON.stringify(newUser);
-    let xhttp = new XMLHttpRequest();
-    if (this.readyState ==4 && this.status ==200) {
-        console.log("Poslao sam zahtev");
-    }
-    xhttp.open("POST", "http://127.0.0.1:8081/user/",true);
-    xhttp.setRequestHeader("Content-type","application/json");
-    xhttp.send(newUser);
-});
    function getUsers () {
     const url = "http://127.0.0.1:8081/users";
     fetch(url)
     .then(
         response => response.json()
     ).then(function(data){
-        $(".entry").view(data)
+      if (!Array.isArray(data) || !data.length){
+        
+      } 
+      $(".entry").view(data); 
     });  
 }
 
@@ -57,10 +55,11 @@ function searchTable() {
 
   function deleteEntry(entryID){
     let entry = entryID.value;
-    let url = "http://127.0.0.1:8081/user/" + entry;
+    const url = "http://127.0.0.1:8081/user/" + entry;
     fetch(url,{
         method: 'delete'
     })
+    
   }
 
 getUsers();

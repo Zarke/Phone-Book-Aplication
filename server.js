@@ -12,7 +12,10 @@ app.use(express.static('app'));
 app.get('/', function (req, res) {
     res.sendFile( __dirname + "/" + "index.htm" );
  })
+ var cors = require('cors');
 
+ // use it before all route definitions
+ app.use(cors({origin: 'http://localhost:8081'}));
 // This responds a POST request for returning al users
 app.get('/users', (req, res) => {
    dbConnect.query("SELECT * FROM entries", function (err, result, fields) {
