@@ -1,23 +1,25 @@
-function insertUser(){
+function insertUser(e){
+  e.preventDefault();
   let firstName = document.getElementById('FirstName').value;
   let lastName = document.getElementById('LastName').value;
   let phoneNum = document.getElementById('PhoneNum').value;
   let newUser = {FirstName:firstName,LastName:lastName,TelephoneNumber:phoneNum};
   newUser = JSON.stringify(newUser);
   const url = "http://127.0.0.1:8081/user";
-  (async () => {
-    const rawResponse = await fetch(url, {
+    fetch(url, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: newUser
-    });
-    const content = await rawResponse.json();
-  
-    console.log(content);
-  })();
+    }).then(
+      responce => responce.json()
+    ).then(function(data){
+      renderUsersTable(data)
+    }
+    )
+
 }
 
    function getUsers () {
@@ -26,12 +28,10 @@ function insertUser(){
     .then(
         response => response.json()
     ).then(function(data){
-      if (!Array.isArray(data) || !data.length){
-        
-      } 
-      $(".entry").view(data); 
-    });  
-}
+      renderUsersTable(data)
+    }); 
+  } 
+
 
 function searchTable() {
     let input, filter, table, tr, td, i;
@@ -58,9 +58,21 @@ function searchTable() {
     const url = "http://127.0.0.1:8081/user/" + entry;
     fetch(url,{
         method: 'delete'
-    })
+    }).then(
+      response => response.json()
+    ).then(function(data){
+      renderUsersTable(data);
+      }
+    )
     
   }
 
 getUsers();
 
+function renderUsersTable(data){
+  if(!Array.isArray(data) || !data.length){
+    $(".entry").view(data) 
+  } else{
+    $(".entry").view(data) 
+  }
+}
