@@ -16,27 +16,23 @@
 </head>
 <body>
     <div class="container resultList">
-        <div class="table-responsive">
+        <div id="users" class="table-responsive">
             <label for="lastname">Search</label>
             <input type="search" id="lastNameSearch" name="lastname" onkeyup="searchTable()" placeholder="Search by Last Name">
             <table id="entriesTable" class="table table-dark table-striped table-hover">
             <caption>User Info</caption>
                 <thead class="thead-dark">
-                    <tr>
+                    
+                        <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Telephone Number</th>
                         <th>Delete entry</th>
                     </tr>
+                    
                 </thead>
-                <tbody>
-                    <tr class="entry">
-                        <td class="bind-FirstName"></td>
-                        <td class="bind-LastName"></td>
-                        <td class="bind-TelephoneNumber"></td>
-                        <td><button class="btn btn-small btn-outline-danger bind-entryID" id="btnDelete" onclick="deleteEntry(this)"><i class="fas fa-trash-alt"></i>
-                        </button></td>
-                    </tr>
+                <tbody id="tableList">
+                    
                 </tbody>   
             </table>
         </div>
@@ -54,4 +50,13 @@
     </div>    
     <script src="./assets/js/app.js"></script>
 </body>
+<template>
+    <tr class="entry">
+        <td class="bind-FirstName"></td>
+        <td class="bind-LastName"></td>
+        <td class="bind-TelephoneNumber"></td>
+        <td><button class="btn btn-small btn-outline-danger bind-entryID" id="btnDelete"   onclick="deleteEntry(this)"><i class="fas fa-trash-alt"></i>
+        </button></td>
+    </tr>
+</template>
 </html>
