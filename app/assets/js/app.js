@@ -1,3 +1,10 @@
+   //variables used in pagination and sort funcitons
+ let table 
+ let rowCount 
+ let pageCount
+ let n = 5
+
+
 function insertUser(e){
   e.preventDefault();
   let firstName = document.getElementById('FirstName').value;
@@ -22,6 +29,11 @@ function insertUser(e){
       var table = document.getElementById('tableList')
       table.innerHTML = ""
       renderUsersTable(data)
+      table = document.getElementById('tableList')
+      rowCount = table.rows.length;
+      pageCount = Math.ceil(rowCount/5);
+      let tr =[]
+      pagination()
     }
     )
 
@@ -35,6 +47,11 @@ function insertUser(e){
         response => response.json()
     ).then(function(data){
       renderUsersTable(data)
+      table = document.getElementById('tableList')
+      rowCount = table.rows.length;
+      pageCount = Math.ceil(rowCount/5);
+      let tr =[]
+      pagination()
     }); 
   } 
 
@@ -70,6 +87,11 @@ function searchTable() {
       var table = document.getElementById('tableList')
       table.innerHTML = ""
       renderUsersTable(data)
+      table = document.getElementById('tableList')
+      rowCount = table.rows.length;
+      pageCount = Math.ceil(rowCount/5);
+      let tr =[]
+      pagination()
       }
     )
     
@@ -77,6 +99,51 @@ function searchTable() {
 
 getUsers();
 
+
+
+
+ //function in charge of entries table paginatioln
+ function pagination(){
+   if (pageCount > 1){
+   tr =[]
+   let i
+   for (i = 0; i < (rowCount); i++){
+     tr[i] = table.rows[i].outerHTML
+   }
+   var btnDiv = document.getElementById('buttons')
+    if (btnDiv) {
+      btnDiv.parentNode.removeChild(btnDiv)
+    }
+   document.getElementById('entriesTable').insertAdjacentHTML("afterend","<div id='buttons' class='pagination justify-content-center'></div>");
+   
+   sort(1)
+   }
+   
+ }
+ function sort(p){
+   let rows = ''
+   let s = ((n * p)-n)
+   for (i = s; i < (s+n) && i < tr.length; i++){
+     rows += tr[i]
+     
+   }
+   table.innerHTML = rows
+   document.getElementById("buttons").innerHTML = pageButtons(pageCount,p);
+ }
+
+ function pageButtons(pCount,cur) {
+   let	prevDis = (cur == 1)?"disabled":""
+   let nextDis = (cur == pCount)?"disabled":""
+   let buttons = "<input type='button'class='btn btn-outline-dark' value='&lt;&lt; ' onclick='sort("+(cur - 1)+")' "+prevDis+">"
+   for (i=1; i<=pCount;i++){
+     buttons += "<input type='button' class='btn btn-outline-dark' id='id"+i+"'value='"+i+"' onclick='sort("+i+")'>"
+     
+   }
+   buttons += "<input type='button' class='btn btn-outline-dark' value=' &gt;&gt;' onclick='sort("+(cur + 1)+")' "+nextDis+">"
+   return buttons;
+ }
+
+//if there are users in the database displays the entries table or no users notification 
 function renderUsersTable(data){
   if(!Array.isArray(data) || !data.length){
     document.getElementById('users').style.display = "none"
