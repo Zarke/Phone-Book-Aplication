@@ -28,7 +28,7 @@ function insertUser(e){
     ).then(function(data){
       var table = document.getElementById('tableList')
       table.innerHTML = ""
-      renderUsersTable(data)
+      renderUsersTable(data,0)
       table = document.getElementById('tableList')
       rowCount = table.rows.length;
       pageCount = Math.ceil(rowCount/5);
@@ -46,7 +46,7 @@ function insertUser(e){
     .then(
         response => response.json()
     ).then(function(data){
-      renderUsersTable(data)
+      renderUsersTable(data,0)
       table = document.getElementById('tableList')
       rowCount = table.rows.length;
       pageCount = Math.ceil(rowCount/5);
@@ -56,26 +56,27 @@ function insertUser(e){
   } 
 
 
-function searchTable() {
-    let input, filter, table, tr, td, i;
-    input = document.getElementById("lastNameSearch");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("entriesTable");
-    tr = table.getElementsByTagName("tr");
-  
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      } 
-    }
+function searchTable(elem) {
+      if (event.key === "Enter") {
+        let searchParam = elem.value;
+        const url = "http://127.0.0.1:8081/users/"+searchParam;
+        fetch(url)
+        .then(
+          response => response.json()
+        ).then(function(data){
+          var table = document.getElementById('tableList')
+          table.innerHTML = ""
+          renderUsersTable(data,1)
+          table = document.getElementById('tableList')
+          rowCount = table.rows.length;
+          pageCount = Math.ceil(rowCount/5);
+          let tr =[]
+          pagination()
+        }); 
+      }
   }
 
+  //deletes user based on entryID that is appended as button value
   function deleteEntry(entryID){
     let entry = entryID.value;
     const url = "http://127.0.0.1:8081/user/" + entry;
@@ -86,7 +87,7 @@ function searchTable() {
     ).then(function(data){
       var table = document.getElementById('tableList')
       table.innerHTML = ""
-      renderUsersTable(data)
+      renderUsersTable(data,0)
       table = document.getElementById('tableList')
       rowCount = table.rows.length;
       pageCount = Math.ceil(rowCount/5);
@@ -137,18 +138,22 @@ getUsers();
    let buttons = "<input type='button'class='btn btn-outline-dark' value='&lt;&lt; ' onclick='sort("+(cur - 1)+")' "+prevDis+">"
    for (i=1; i<=pCount;i++){
      buttons += "<input type='button' class='btn btn-outline-dark' id='id"+i+"'value='"+i+"' onclick='sort("+i+")'>"
-     
    }
    buttons += "<input type='button' class='btn btn-outline-dark' value=' &gt;&gt;' onclick='sort("+(cur + 1)+")' "+nextDis+">"
    return buttons;
  }
 
 //if there are users in the database displays the entries table or no users notification 
-function renderUsersTable(data){
+function renderUsersTable(data, searchCheck){
   if(!Array.isArray(data) || !data.length){
     document.getElementById('users').style.display = "none"
-    document.getElementById('search').style.display = "none"
-    document.getElementById('users').insertAdjacentHTML('afterend','<span id="notification">There are currently no registered entries</span>')
+    if(searchCheck) {
+      document.getElementById('lastNameSearch').value = "No matches"
+    } else {
+      document.getElementById('users').insertAdjacentHTML('afterend','<span id="notification">There are currently no registered entries</span>')
+      document.getElementById('search').style.display = "none"
+    }
+    
   } else{
     document.getElementById('search').style.display = ""
     document.getElementById('users').style.display = ""

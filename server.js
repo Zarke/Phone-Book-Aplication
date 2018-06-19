@@ -34,7 +34,7 @@ app.post('/user',  (req, res) => {
      
  })
 
-// This responds a DELETE request for the /del_user page.
+// 
 app.delete('/user/:id', (req, res) =>{
     let userID = req.params.id;
     dbConnect.query("DELETE FROM entries WHERE entryID = "+userID, (err, result) =>{
@@ -43,6 +43,14 @@ app.delete('/user/:id', (req, res) =>{
         }); 
 })
 
+// returns all matching rows according to the criteria set in LIKE statement
+app.get('/users/:search', (req, res) =>{
+    let searchParam = req.params.search;
+    dbConnect.query("SELECT * FROM entries WHERE LastName LIKE '%"+searchParam+"%'", (err, result) =>{
+        if (err) throw err;
+        res.json(result);
+        }); 
+})
 
 let server = app.listen(8081, () =>{
 
