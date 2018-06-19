@@ -6,6 +6,7 @@
     <title>Phone Book Application</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -16,37 +17,38 @@
 </head>
 <body>
     <div class="container resultList">
-        <div id="users" class="table-responsive">
-            <label for="lastname">Search</label>
-            <input type="search" id="lastNameSearch" name="lastname" onkeyup="searchTable()" placeholder="Search by Last Name">
+        <div class="row justify-content-center">
+                <div class="col-md-3 text-center" id="search">
+                    <label for="lastname" class="" >Search</label>
+                    <input type="search" id="lastNameSearch" class="form-control" name="lastname" onkeyup="searchTable()"        placeholder="Search by Last Name">
+                </div>
+        <div id="users" class="table-responsive text-center">
             <table id="entriesTable" class="table table-dark table-striped table-hover">
             <caption>User Info</caption>
                 <thead class="thead-dark">
-                    
-                        <tr>
+                    <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Telephone Number</th>
                         <th>Delete entry</th>
                     </tr>
-                    
                 </thead>
-                <tbody id="tableList">
-                    
+                <tbody id="tableList">  
                 </tbody>   
             </table>
         </div>
+    </div>
     <hr>
-    <div class="form-group">
-    <form id="userInput" name="userInput">
-            <label for="firstName">First Name:</label>
-            <input type= "text" name="firstName" id="FirstName" class="form-control" required>
-            <label for="lastName">Last Name:</label>
-            <input type= "text" name="lastName" id="LastName" class="form-control" required>
-            <label for="phoneNumName">Phone Number:</label>
-            <input type= "text" name="phoneNum" id="PhoneNum" maxlength="15" class="form-control" required> 
-            <button id="insert" class=" btn btn-outline-dark" onclick="insertUser(event)">Insert User</button>
-        </form>
+    <div class="d-flex justify-content-center text-center">
+        <form name="userInput" class="inputForm">
+                <label for="firstName">First Name:</label>
+                <input type= "text" name="firstName" id="FirstName" class="form-control" required>
+                <label for="lastName">Last Name:</label>
+                <input type= "text" name="lastName" id="LastName" class="form-control" required>
+                <label for="phoneNumName">Phone Number:</label>
+                <input type= "text" name="phoneNum" id="PhoneNum" maxlength="15" class="form-control"   required> 
+                <button id="insert" class=" btn btn-outline-dark" onclick="insertUser(event)">Insert    User</button>
+            </form>
     </div>    
     <script src="./assets/js/app.js"></script>
 </body>

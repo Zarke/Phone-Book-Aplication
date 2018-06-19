@@ -19,11 +19,12 @@ function insertUser(e){
     }).then(
       responce => responce.json()
     ).then(function(data){
-      // var table = document.getElementById('tableList')
-      // table.innerHTML = ""
+      var table = document.getElementById('tableList')
+      table.innerHTML = ""
       renderUsersTable(data)
     }
     )
+
     
 }
 
@@ -78,11 +79,19 @@ getUsers();
 
 function renderUsersTable(data){
   if(!Array.isArray(data) || !data.length){
-    document.getElementById('users').style.display = "hidden";
+    document.getElementById('users').style.display = "none"
+    document.getElementById('search').style.display = "none"
+    document.getElementById('users').insertAdjacentHTML('afterend','<span id="notification">There are currently no registered entries</span>')
   } else{
-    var temp = document.getElementsByTagName("template")[0];
-    var clon = temp.content.cloneNode(true);
-    document.getElementById('tableList').appendChild(clon);
-    $('.entry').view(data);
+    document.getElementById('search').style.display = ""
+    document.getElementById('users').style.display = ""
+    var notification = document.getElementById('notification')
+    if (notification) {
+      notification.parentNode.removeChild(notification)
+    }
+    var temp = document.getElementsByTagName("template")[0]
+    var clon = temp.content.cloneNode(true)
+    document.getElementById('tableList').appendChild(clon)
+    $('.entry').view(data)
   }
 }
